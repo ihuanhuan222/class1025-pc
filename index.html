@@ -6,13 +6,64 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<div id="box"></div>
+<div id="wrap">
+    <!--头部-->
+    <header class="header">
+        <div class="header-main">
+            <!--logo图片-->
+            <h1 class="logo">
+                <img src="img/logo.png" alt="logo">
+            </h1>
+            <!--music-->
+            <img class="musicIcon" src="img/musicon.gif" alt="music">
+            <!--导航区域-->
+            <ul class="nav">
+                <li>
+                    <a href="javascript:;">
+                        <div class="up">
+                            <img src="img/home_gruen.png" alt="">
+                        </div>
+                        <div class="down">
+                            <img src="img/home.png" alt="">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <h3 class="up">Course</h3>
+                        <h3 class="down">Course</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <h3 class="up">Works</h3>
+                        <h3 class="down">Works</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <h3 class="up">About</h3>
+                        <h3 class="down">About</h3>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <h3 class="up">Team</h3>
+                        <h3 class="down">Team</h3>
+                    </a>
+                </li>
+            </ul>
+            <!--小箭头-->
+            <div class="arrow"></div>
+        </div>
+    </header>
+    <!--内容区-->
+    <div class="content"></div>
+</div>
 </body>
 <script type="text/javascript">
     window.onload = function () {
         var box = document.getElementById('box');
-
-
     }
 </script>
 </html>

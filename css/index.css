@@ -1,0 +1,69 @@
+/*css reset 重置*/
+html,body{height: 100%;overflow: hidden;}
+html,body,h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0px;padding: 0px;font: 14px "微软雅黑";}
+a{text-decoration: none;display: block;}
+li{list-style: none;}
+img{display: block;}
+/*清除浮动*/
+.clearfix{*zoom: 1;}
+.clearfix:after{content: "";display: block;clear: both;}
+#wrap{
+    width:100%;
+    background: pink;
+}
+.header{
+    height: 80px;
+    width: 100%;
+}
+.header-main{
+    position: relative;
+    width: 1100px;
+    height: 80px;
+    background: gray;
+    margin: 0 auto;
+}
+.logo{
+    float: left;
+    margin-top: 15px;
+}
+.musicIcon{
+    float: left;
+    margin-top: 50px;
+}
+.nav{
+    float: right;
+    margin-top: 50px;
+}
+.nav li{
+    float: left;
+    margin-left: 40px;
+    position: relative;
+}
+.nav li:hover .up{
+    width:100%;
+}
+.nav a{
+    cursor: pointer;
+}
+.nav a .up{
+    position: absolute;
+    top:0;
+    left: 0;
+    width:0;
+    overflow: hidden;
+    transition: width 1s;
+    color: black;
+}
+.nav a .down{
+    color: #009EE0;
+}
+.arrow{
+    width: 21px;
+    height: 11px;
+    background-image: url("../img/arrow.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 50%;
+    bottom: -11px;
+}
+
