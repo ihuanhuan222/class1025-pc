@@ -52,6 +52,10 @@ img{display: block;}
     margin-left: 40px;
     position: relative;
 }
+.nav li:nth-child(1){
+    width: 18px;
+    /*等到图片加载完成 ，宽度固定就不会改变小箭头对准li下面*/
+}
 .nav li:hover .up{
     width:100%;
 }

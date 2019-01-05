@@ -39,7 +39,16 @@ window.addEventListener('DOMContentLoaded',function () {
         var nowIndex = 0;
         for (var i = 0; i < pointLiNode.length; i++) {
             pointLiNode[i].index = i;
+
+            //函数节流：规定时间内，只让第一次操作生效，后面不生效
+            var lastTime = 0;
             pointLiNode[i].onclick = function () {
+                var nowTime = Date.now(); //得到当前的格林时间 单位：毫秒
+                //如果点击的时间间隔小于2秒，不生效
+                if(nowTime - lastTime <= 2000) return;
+                //同步上一次的点击时间
+                lastTime = nowTime;
+
                 //nowIndex=lastIndex时
                 nowIndex = this.index;
                 if(nowIndex ==lastIndex)return;
@@ -58,12 +67,27 @@ window.addEventListener('DOMContentLoaded',function () {
                 lastIndex = nowIndex;
             }
         }
+        //自动轮播
+        var timers = null;
+        timers = setInterval(function () {
+            nowIndex++;
+            if(nowIndex >= 4) nowIndex = 0;
+            //如果nowIndex>lastIndex时，右边显示左边隐藏
+            carouselLiNode[nowIndex].className = 'common right-show';
+            carouselLiNode[lastIndex].className = 'common left-hide';
+            //小圆点切换
+            pointLiNode[nowIndex].className = 'active';
+            pointLiNode[lastIndex].className = '';
+            lastIndex = nowIndex;
+
+        },3000)
     }
+
+
 
     //滚轮事件
     document.onmousewheel = wheel;
     document.addEventListener('DOMMouseScroll',wheel);
-
     var contentUlNode = document.querySelector('.content-main');
     var contentLiNodes = document.querySelectorAll('.content-main li');
     var count = 0;
@@ -127,8 +151,8 @@ window.addEventListener('DOMContentLoaded',function () {
         event.preventDefault && event.preventDefault();
         return false;
     }
-     //同步窗口
-        window.onresize = function () {
+    //同步窗口
+    window.onresize = function () {
             arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
                 - arrowNode.offsetWidth/2 +'px';
         }
