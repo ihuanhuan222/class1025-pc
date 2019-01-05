@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded',function () {
     var arrowNode = document.querySelector('.arrow');
     var upNodes = document.querySelectorAll('.up');
     headerHandle();
-   function headerHandle() {
+    function headerHandle() {
        //获取dom元素
 
 
@@ -30,77 +30,106 @@ window.addEventListener('DOMContentLoaded',function () {
            }
        }
    }
-
-//滚轮事件
-document.onmousewheel = wheel;
-document.addEventListener('DOMMouseScroll',wheel);
-
-var contentUlNode = document.querySelector('.content-main');
-var contentLiNodes = document.querySelectorAll('.content-main li');
-var count = 0;
-var timer = null;
-function wheel(event) {
-    //关闭定时器
-    clearTimeout(timer);
-    timer=setTimeout(function () {
-        var flag = '';
-        if (event.wheelDelta) {
-            //ie/chrome
-            if (event.wheelDelta > 0) {
-                flag = 'up';
-            } else {
-                flag = 'down'
-            }
-        } else if (event.detail) {
-            //firefox
-            if (event.detail < 0) {
-                flag = 'up';
-            } else {
-                flag = 'down'
+    //轮播图
+    carousel();
+    function carousel() {
+        var carouselLiNode = document.querySelectorAll('.carousel li');
+        var pointLiNode = document.querySelectorAll('.point li');
+        var lastIndex = 0;
+        var nowIndex = 0;
+        for (var i = 0; i < pointLiNode.length; i++) {
+            pointLiNode[i].index = i;
+            pointLiNode[i].onclick = function () {
+                //nowIndex=lastIndex时
+                nowIndex = this.index;
+                if(nowIndex ==lastIndex)return;
+                if(nowIndex > lastIndex){
+                    //如果nowIndex>lastIndex时，右边显示左边隐藏
+                    carouselLiNode[nowIndex].className = 'common right-show';
+                    carouselLiNode[lastIndex].className = 'common left-hide';
+                } else {
+                    //如果nowIndex<lastIndex时，左边显示右边隐藏
+                    carouselLiNode[nowIndex].className = 'common left-show';
+                    carouselLiNode[lastIndex].className = 'common right-hide';
+                }
+                //小圆点切换
+                pointLiNode[nowIndex].className = 'active';
+                pointLiNode[lastIndex].className = '';
+                lastIndex = nowIndex;
             }
         }
-
-        switch (flag) {
-            case 'up' :
-                console.log(111)
-                if(count >0){
-                    count--;
-                    contentUlNode.style.top = -count* contentLiNodes[0].offsetHeight +'px';
-                    arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
-                        - arrowNode.offsetWidth/2 +'px';
-                    for (var j = 0; j < upNodes.length; j++) {
-                        upNodes[j].style.width = '';
-                    }
-                    //其他li切换 为100% --找到准确下标
-                    upNodes[count].style.width = '100%';
-                }
-
-                break;
-            case 'down' :
-                console.log(111)
-                if(count <4){
-                    count++;
-                    contentUlNode.style.top = -count* contentLiNodes[0].offsetHeight +'px';
-                    arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
-                        - arrowNode.offsetWidth/2 +'px';
-                    for (var j = 0; j < upNodes.length; j++) {
-                        upNodes[j].style.width = '';
-                    }
-                    //其他li切换 为100% --找到准确下标
-                    upNodes[count].style.width = '100%';
-                }
-                break;
-        }
-
-    },200)
-    event = event || window.event;
-    //禁止默认行为
-    event.preventDefault && event.preventDefault();
-    return false;
- }
- //同步窗口
-    window.onresize = function () {
-        arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
-            - arrowNode.offsetWidth/2 +'px';
     }
+
+    //滚轮事件
+    document.onmousewheel = wheel;
+    document.addEventListener('DOMMouseScroll',wheel);
+
+    var contentUlNode = document.querySelector('.content-main');
+    var contentLiNodes = document.querySelectorAll('.content-main li');
+    var count = 0;
+    var timer = null;
+    function wheel(event) {
+        //关闭定时器
+        clearTimeout(timer);
+        timer=setTimeout(function () {
+            var flag = '';
+            if (event.wheelDelta) {
+                //ie/chrome
+                if (event.wheelDelta > 0) {
+                    flag = 'up';
+                } else {
+                    flag = 'down'
+                }
+            } else if (event.detail) {
+                //firefox
+                if (event.detail < 0) {
+                    flag = 'up';
+                } else {
+                    flag = 'down'
+                }
+            }
+
+            switch (flag) {
+                case 'up' :
+                    console.log(111)
+                    if(count >0){
+                        count--;
+                        contentUlNode.style.top = -count* contentLiNodes[0].offsetHeight +'px';
+                        arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
+                            - arrowNode.offsetWidth/2 +'px';
+                        for (var j = 0; j < upNodes.length; j++) {
+                            upNodes[j].style.width = '';
+                        }
+                        //其他li切换 为100% --找到准确下标
+                        upNodes[count].style.width = '100%';
+                    }
+
+                    break;
+                case 'down' :
+                    console.log(111)
+                    if(count <4){
+                        count++;
+                        contentUlNode.style.top = -count* contentLiNodes[0].offsetHeight +'px';
+                        arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
+                            - arrowNode.offsetWidth/2 +'px';
+                        for (var j = 0; j < upNodes.length; j++) {
+                            upNodes[j].style.width = '';
+                        }
+                        //其他li切换 为100% --找到准确下标
+                        upNodes[count].style.width = '100%';
+                    }
+                    break;
+            }
+
+        },200)
+        event = event || window.event;
+        //禁止默认行为
+        event.preventDefault && event.preventDefault();
+        return false;
+    }
+     //同步窗口
+        window.onresize = function () {
+            arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
+                - arrowNode.offsetWidth/2 +'px';
+        }
 })

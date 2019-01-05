@@ -7,6 +7,14 @@ html,body,h1,h2,h3,h4,h5,h6,p,ul,li{margin: 0px;padding: 0px;font: 14px "微软�
 a{text-decoration: none;display: block;}
 li{list-style: none;}
 img{display: block;}
+/*title公共样式*/
+.common{
+    color:#009ee0;
+    font-size:80px;
+    line-height:0.8;
+    font-weight:bold;
+    letter-spacing:-5px;
+}
 /*清除浮动*/
 .clearfix{*zoom: 1;}
 .clearfix:after{content: "";display: block;clear: both;}
@@ -79,13 +87,13 @@ img{display: block;}
     bottom: 0;
     left: 0;
     right: 0;
-    background: pink;
+    /*background: pink;*/
     overflow: hidden;
 }
 .content-main{
     width: 100%;
     height: 500%;
-    background: deeppink;
+    /*background: deeppink;*/
     position: absolute;
     top:0;
     left: 0;
@@ -99,10 +107,115 @@ img{display: block;}
 .content-main section{
     width: 1100px;
     height: 520px;
-    background: pink;
+    /*background: pink;*/
     position: absolute;
     top:50%;
     left: 50%;
     margin-left: -550px;
     margin-top:-260px;
+}
+.content-main>li:nth-child(1){
+    background-image: url("../img/bg1.jpg");
+}
+.content-main>li:nth-child(2){
+    background-image: url("../img/bg2.jpg");
+}
+.content-main>li:nth-child(3){
+    background-image: url("../img/bg3.jpg");
+}
+.content-main>li:nth-child(4){
+    background-image: url("../img/bg4.jpg");
+}
+.content-main>li:nth-child(5){
+    background-image: url("../img/bg5.jpg");
+}
+.carousel{
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+.carousel li{
+    width:100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+    text-align: center;
+    line-height: 520px;
+    color: white;
+    visibility: hidden;
+}
+.carousel .active{
+    visibility: visible;
+}
+.carousel li:nth-child(1){
+    background:#dc6c5f;
+}
+.carousel li:nth-child(2){
+    background:#95dc84;
+}
+.carousel li:nth-child(3){
+    background:#64b9d2;
+}
+.carousel li:nth-child(4){
+    background:#000000;
+}
+.home{
+    position: relative;
+}
+.point{
+    position: absolute;
+    left:50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+.point>li{
+    float: left;
+    width: 20px;
+    height: 20px;
+    background-color:rgba(255,255,255,0.5);
+    margin: 2px;
+    box-shadow: 0 0 4px rgba(25,25,25,0.8);
+    border-radius: 50%;
+}
+.point .active{
+    background-color: #ffffff;
+}
+.carousel .right-show{
+    visibility: visible;
+    animation: rightShow 2s linear;
+}
+.carousel .right-hide{
+    visibility: hidden;
+    animation: rightHide 2s linear;
+}
+.carousel .left-hide{
+    visibility: hidden;
+    animation: leftHide 2s linear;
+}
+.carousel .left-show{
+    visibility: visible;
+    animation: leftShow 2s linear;
+}
+
+@keyframes rightShow {
+    0%{visibility: hidden; transform: translateZ(-200px)}
+    50%{transform: translateX(40%) rotateY(-30deg) scale(.8)}
+    100%{visibility: visible}
+}
+@keyframes rightHide {
+    0%{visibility: visible;}
+    50%{transform: translateX(40%) rotateY(-30deg) scale(.8)}
+    100%{visibility:hidden; transform: translateZ(-200px)}
+}
+@keyframes leftHide {
+    0%{visibility: visible}
+    50%{transform: translateX(-40%) rotateY(30deg) scale(.8)}
+    100%{visibility: hidden; transform: translateZ(-200px)}
+}
+@keyframes leftShow {
+    0%{visibility: visible; transform: translateZ(-200px)}
+    50%{transform: translateX(-40%) rotateY(30deg) scale(.8)}
+    100%{visibility: hidden; }
 }
