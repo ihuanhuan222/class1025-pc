@@ -1,14 +1,18 @@
 //等待页面加载完成（所有资源）
 window.addEventListener('DOMContentLoaded',function () {
     //处理头部js代码
+    //获取dom元素
     var liNodes = document.querySelectorAll('.nav li');
     var arrowNode = document.querySelector('.arrow');
     var upNodes = document.querySelectorAll('.up');
+    var contentUlNode = document.querySelector('.content-main');
+    var contentLiNodes = document.querySelectorAll('.content-main li');
+    var count = 0;
+    var timer = null;
+
+    //第一屏js代码
     headerHandle();
     function headerHandle() {
-       //获取dom元素
-
-
        //初始化时小箭头来到第一个Li的位置
        arrowNode.style.left = liNodes[0].getBoundingClientRect().left + liNodes[0].offsetWidth/2
            - arrowNode.offsetWidth/2 +'px';
@@ -82,16 +86,9 @@ window.addEventListener('DOMContentLoaded',function () {
 
         },3000)
     }
-
-
-
     //滚轮事件
     document.onmousewheel = wheel;
     document.addEventListener('DOMMouseScroll',wheel);
-    var contentUlNode = document.querySelector('.content-main');
-    var contentLiNodes = document.querySelectorAll('.content-main li');
-    var count = 0;
-    var timer = null;
     function wheel(event) {
         //关闭定时器
         clearTimeout(timer);
