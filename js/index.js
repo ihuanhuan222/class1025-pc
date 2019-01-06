@@ -75,6 +75,8 @@ window.addEventListener('DOMContentLoaded',function () {
         var timers = null;
         timers = setInterval(function () {
             nowIndex++;
+            //同步上一次点击时间，为了在轮播时用户不能点击小圆点 ，用户过2后再点轮播图
+            lastTime = Date.now();
             if(nowIndex >= 4) nowIndex = 0;
             //如果nowIndex>lastIndex时，右边显示左边隐藏
             carouselLiNode[nowIndex].className = 'common right-show';
