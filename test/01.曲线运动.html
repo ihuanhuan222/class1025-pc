@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #test{
+      position: absolute;
+      top:200px;
+      left: 200px;
+      width: 10px;
+      height: 10px;
+      background: deeppink;
+    }
+    .box{
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      background: #000000;
+    }
+  </style>
+</head>
+<body>
+
+<div id="test"></div>
+
+</body>
+<script type="text/javascript">
+  window.onload = function () {
+      var test = document.getElementById('test');
+     //获取元素
+      var testLeft = test.offsetLeft;
+      var testTop = test.offsetTop;
+      var deg = 0;
+      var scale = 100;
+      setInterval(function () {
+        deg++;
+        //得到弧度的值
+        var rad = deg * Math.PI /180;
+
+        var nowLeft = testLeft + 0.5*rad *scale + 'px';
+        var nowTop = testTop + 2*Math.sin(rad)*scale + 'px';
+
+        //改变test的left,top值
+        test.style.left = nowLeft;
+        test.style.top = nowTop;
+        //创建box
+        var box = document.createElement('div');
+        box.className = 'box';
+        box.style.left = nowLeft;
+        box.style.top = nowTop;
+        document.body.appendChild(box);
+      },20)
+
+
+  };
+</script>
+</html>

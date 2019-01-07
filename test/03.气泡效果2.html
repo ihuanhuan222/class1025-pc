@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        background: grey;
+      }
+      #myCanvas{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        background: white;
+      }
+
+
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="400" height="400"></canvas>
+<script type="text/javascript">
+  window.onload = function () {
+
+    var myCanvas = document.getElementById('myCanvas');
+    var circleArr = [];
+
+    if(myCanvas.getContext){
+      var ctx = myCanvas.getContext('2d');
+      //画圆
+      setInterval(function () {
+
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+        for (var i = 0; i < circleArr.length; i++) {
+          circleArr[i].c_r ++;
+          circleArr[i].opacity -= 0.01;
+
+          if(circleArr[i].opacity <= 0){
+            circleArr.slice(i,1);
+            continue;
+          }
+          ctx.fillStyle = 'rgba('+ circleArr[i].r+','+ circleArr[i].g+','+ circleArr[i].b+','+ circleArr[i].opacity+')';
+          ctx.beginPath();
+          ctx.arc(circleArr[i].x,circleArr[i].y,circleArr[i].c_r,0,Math.PI*2);
+          ctx.fill();
+        }
+      },20)
+
+      //生成圆
+      setInterval(function () {
+        var r = Math.floor(Math.random()*255);
+        var g = Math.floor(Math.random()*255);
+        var b = Math.floor(Math.random()*255);
+
+        var x = Math.floor(Math.random()*myCanvas.width);
+        var y = Math.floor(Math.random()*myCanvas.height);
+
+        circleArr.push({
+          r: r,
+          g: g,
+          b: b,
+          x: x,
+          y: y,
+          c_r: 10,
+          opacity: 1
+        });
+      },20);
+    }
+  };
+</script>
+</body>
+</html>

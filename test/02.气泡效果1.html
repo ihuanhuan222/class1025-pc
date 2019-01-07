@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        background: grey;
+      }
+      #myCanvas{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: white;
+      }
+
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="400" height="400">
+  暂不支持canvas....
+</canvas>
+<script type="text/javascript">
+  window.onload = function () {
+    //获取dom元素
+    var myCanvas = document.getElementById('myCanvas');
+    //圆数组
+    var circleArr = [];
+    //处理canvas兼容性问题
+    if(myCanvas.getContext){
+      //获取画笔
+      var ctx = myCanvas.getContext('2d');
+      //画圆
+      setInterval(function () {
+
+        for (var i = 0; i < circleArr.length; i++) {
+          //绘制颜色
+          ctx.fillStyle = 'rgb('+ circleArr[i].r+','+ circleArr[i].g+','+ circleArr[i].b+')';
+          ctx.beginPath();
+          ctx.arc(circleArr[i].x,circleArr[i].y,10,0,2*Math.PI,true);
+          //填充颜色
+          ctx.fill();
+        }
+      },500)
+    }
+    //生成圆
+    setInterval(function () {
+      //随机颜色
+      var r = Math.floor(Math.random()*255);
+      var g = Math.floor(Math.random()*255);
+      var b = Math.floor(Math.random()*255);
+
+      //随机圆坐标
+      var x =Math.floor(Math.random()*myCanvas.width);
+      var y =Math.floor(Math.random()*myCanvas.height);
+
+      circleArr.push({
+        r: r,
+        g: g,
+        b: b,
+        x: x,
+        y: y
+      })
+    },500)
+
+  }
+
+</script>
+</body>
+</html>

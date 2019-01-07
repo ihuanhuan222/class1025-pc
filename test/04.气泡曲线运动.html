@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        background: grey;
+      }
+      #myCanvas{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        background: white;
+      }
+
+
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="150" height="400"></canvas>
+<script type="text/javascript">
+  window.onload = function () {
+
+    var myCanvas = document.getElementById('myCanvas');
+    var circleArr = [];
+
+    if(myCanvas.getContext){
+      var ctx = myCanvas.getContext('2d');
+      //画圆
+      setInterval(function () {
+        //清除画布；把之前画的清除掉
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+        for (var i = 0; i < circleArr.length; i++) {
+          circleArr[i].deg += 5;
+          //弧度的值
+          var rad = circleArr[i].deg *Math.PI/180;
+          //计算得出小圆点运动坐标
+          var nowLeft = Math.floor(Math.sin(rad)*circleArr[i].s + circleArr[i].x);
+          var nowTop = Math.floor(circleArr[i].y -rad*circleArr[i].s);
+
+          ctx.fillStyle = 'rgba('+ circleArr[i].r+','+ circleArr[i].g+','+ circleArr[i].b+')';
+          ctx.beginPath();
+          ctx.arc(nowLeft,nowTop,circleArr[i].c_r,0,Math.PI*2);
+          ctx.fill();
+        }
+      },1000/60)
+
+      //生成圆
+      setInterval(function () {
+        //颜色随机
+        var r = Math.floor(Math.random()*255);
+        var g = Math.floor(Math.random()*255);
+        var b = Math.floor(Math.random()*255);
+        //半径随机
+        var c_r = Math.floor(Math.random()*8 +2);
+        //位置随机
+        var x = Math.floor(Math.random()*myCanvas.width);
+        var y = myCanvas.height + c_r;
+        var s =Math.floor(Math.random()*30 +20);
+
+        circleArr.push({
+          r: r,
+          g: g,
+          b: b,
+          x: x,
+          y: y,
+          c_r: c_r,
+          deg: 0,
+          s: s
+        });
+      },20);
+    }
+  };
+</script>
+</body>
+</html>

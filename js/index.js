@@ -1,6 +1,5 @@
 //等待页面加载完成（所有资源）
 window.addEventListener('DOMContentLoaded',function () {
-    //处理头部js代码
     //获取dom元素
     var liNodes = document.querySelectorAll('.nav li');
     var arrowNode = document.querySelector('.arrow');
@@ -155,4 +154,105 @@ window.addEventListener('DOMContentLoaded',function () {
             arrowNode.style.left = liNodes[count].getBoundingClientRect().left + liNodes[count].offsetWidth/2
                 - arrowNode.offsetWidth/2 +'px';
         }
+    
+    //第五屏js代码
+    lastHandle();
+    function lastHandle() {
+      //获取dom元素
+      var teamUlNode = document.querySelector('.team-person');
+      var teamLiNode = document.querySelectorAll('.team-person li');
+      var width = teamLiNode[0].offsetWidth;
+      var height = teamLiNode[0].offsetHeight;
+      var canvas = null;
+      var creatCircleTimer = null;
+      var paintingTimer = null;
+
+      for (var i = 0; i < teamLiNode.length; i++) {
+        teamLiNode[i].index = i;
+        teamLiNode[i].onmouseenter = function () {
+          //改变透明度
+          for (var j = 0; j < teamLiNode.length; j++) {
+            teamLiNode[j].style.opacity = 0.5;
+          }
+          this.style.opacity = 1;
+          if(!canvas){
+            //创建画布
+            canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            canvas.className = 'canvas';
+            //产生气泡
+            buble(canvas);
+            teamUlNode.appendChild(canvas);
+          }
+          //不管添加不添加canvas，left值都得改变
+          canvas.style.left = this.index * width +'px';
+
+        }
+      }
+      teamUlNode.onmouseleave = function () {
+        for (var i = 0; i < teamLiNode.length; i++) {
+          teamLiNode[i].style.opacity = 1;
+        }
+        //清除画布
+        canvas.remove();
+        canvas = null;
+        //清除定时器，防止多次点击网页卡
+        clearInterval(creatCircleTimer);
+        clearInterval(paintingTimer);
+      }
+      //封装气泡运动函数
+      function buble(myCanvas) {
+        var circleArr = [];
+
+        if(myCanvas.getContext){
+          var ctx = myCanvas.getContext('2d');
+          //画圆
+          creatCircleTimer= setInterval(function () {
+            //清除画布；把之前画的清除掉
+            ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+            for (var i = 0; i < circleArr.length; i++) {
+              circleArr[i].deg += 8;
+              //弧度的值
+              var rad = circleArr[i].deg *Math.PI/180;
+              //计算得出小圆点运动坐标
+              var nowLeft = Math.floor(Math.sin(rad)*circleArr[i].s + circleArr[i].x);
+              var nowTop = Math.floor(circleArr[i].y -rad*circleArr[i].s);
+
+              ctx.fillStyle = 'rgba('+ circleArr[i].r+','+ circleArr[i].g+','+ circleArr[i].b+')';
+              ctx.beginPath();
+              ctx.arc(nowLeft,nowTop,circleArr[i].c_r,0,Math.PI*2);
+              ctx.fill();
+            }
+          },1000/60)
+
+          //生成圆
+          paintingTimer= setInterval(function () {
+            //颜色随机
+            var r = Math.floor(Math.random()*255);
+            var g = Math.floor(Math.random()*255);
+            var b = Math.floor(Math.random()*255);
+            //半径随机
+            var c_r = Math.floor(Math.random()*8 +2);
+            //位置随机
+            var x = Math.floor(Math.random()*myCanvas.width);
+            var y = myCanvas.height + c_r;
+            var s =Math.floor(Math.random()*30 +20);
+
+            circleArr.push({
+              r: r,
+              g: g,
+              b: b,
+              x: x,
+              y: y,
+              c_r: c_r,
+              deg: 0,
+              s: s
+            });
+          },20);
+        }
+      }
+    }
+
+  
 })
