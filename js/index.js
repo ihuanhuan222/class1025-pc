@@ -6,6 +6,23 @@ window.addEventListener('DOMContentLoaded',function () {
     var upNodes = document.querySelectorAll('.up');
     var contentUlNode = document.querySelector('.content-main');
     var contentLiNodes = document.querySelectorAll('.content-main li');
+    var navBarLiNode = document.querySelectorAll('.nav-bar li');
+    var musicIcon = document.querySelector('.header-main .musicIcon');
+    var homeNode = document.querySelector('.home');
+    var plane1 = document.querySelector('.plane1');
+    var plane2 = document.querySelector('.plane2');
+    var plane3 = document.querySelector('.plane3');
+    var pencel1 = document.querySelector('.works .pencel1');
+    var pencel2 = document.querySelector('.works .pencel2');
+    var pencel3 = document.querySelector('.works .pencel3');
+    var aboutPhoto =document.querySelectorAll('.about-photo');
+    var teamTitle = document.querySelector('.team-title');
+    var teamContent = document.querySelector('.team-content');
+    var bootAnimationLine = document.querySelector('.boot-animation .line');
+    var bootAnimationTop = document.querySelector('.boot-animation .top');
+    var bootAnimationBottom = document.querySelector('.boot-animation .bottom');
+    var bootAnimation = document.querySelector('.boot-animation');
+
     var count = 0;
     var timer = null;
 
@@ -30,6 +47,7 @@ window.addEventListener('DOMContentLoaded',function () {
                arrowNode.style.left = this.getBoundingClientRect().left + this.offsetWidth/2
                    - arrowNode.offsetWidth/2 +'px';
                contentUlNode.style.top = -this.index* contentLiNodes[0].offsetHeight +'px';
+
            }
        }
    }
@@ -128,7 +146,7 @@ window.addEventListener('DOMContentLoaded',function () {
 
                     break;
                 case 'down' :
-                    console.log(111)
+                    // console.log(111)
                     if(count <4){
                         count++;
                         contentUlNode.style.top = -count* contentLiNodes[0].offsetHeight +'px';
@@ -254,5 +272,123 @@ window.addEventListener('DOMContentLoaded',function () {
       }
     }
 
+    //侧边导航
+    for (var i = 0; i < navBarLiNode.length; i++) {
+      this.index = i;
+      navBarLiNode.onclick = function () {
+        nowIndex = this.index;
+        //默认清空所有width为0
+        for (var j = 0; j < upNodes.length; j++) {
+          upNodes[j].style.width = '';
+          navBarLiNode[j].className = '';
+        }
+        //其他li切换 为100% --找到准确下标
+        upNodes[ nowIndex].style.width = '100%';
+        //小箭头去当前指定的li下面
+        arrowNode.style.left = this.getBoundingClientRect().left + this.offsetWidth/2
+          - arrowNode.offsetWidth/2 +'px';
+        contentUlNode.style.top = - nowIndex* contentLiNodes[0].offsetHeight +'px';
+
+        //侧边导航
+        navBarLiNode[this.index].className = 'active';
+
+      }
+
+  }
+
+    //音乐播放
+    // musicIcon.onclick = function () {
+    //   if(musicIcon.pushed){
+    //       //当前音乐暂停，点击播放
+    //     musicIcon.play();
+    //   }
+    // }
+
+
+    //出入场动画
+    var animationArr = [
+      {
+      anOut:function () {
+        homeNode.style.transform = 'translateY(-200px)';
+        homeNode.style.opacity = 0;
+      },
+      anIn:function () {
+        homeNode.style.transform = 'translateY(0px)';
+        homeNode.style.opacity = 1;
+      }
+      },
+      {
+        anOut:function () {
+          plane1.style.transform = 'translate(-200px,-200px)';
+          plane2.style.transform = 'translate(-200px,200px)';
+          plane3.style.transform = 'translate(200px,-200px)';
+
+        },
+        anIn:function () {
+          plane1.style.transform = 'translate(0)';
+          plane2.style.transform = 'translate(0)';
+          plane3.style.transform = 'translate(0)';
+        }
+      },
+      {
+        anOut:function () {
+          pencel1.style.transform = 'translateY(-200px)';
+          pencel2.style.transform = 'translateY(200px)';
+          pencel3.style.transform = 'translateY(200px)';
+
+        },
+        anIn:function () {
+          pencel1.style.transform = 'translate(0)';
+          pencel2.style.transform = 'translate(0)';
+          pencel3.style.transform = 'translate(0)';
+        }
+      },
+      {
+        anOut:function () {
+          aboutPhoto[0].style.transform = 'rotate(30deg)';
+          aboutPhoto[1].style.transform = 'rotate(-30deg)';
+        },
+        anIn:function () {
+          aboutPhoto[0].style.transform = 'rotate(0deg)';
+          aboutPhoto[1].style.transform = 'rotate(0deg)';
+        }
+      },
+      {
+        anOut:function () {
+          teamTitle.style.transform = 'translateX(-200px)';
+          teamContent.style.transform = 'translateX(200px)';
+        },
+        anIn:function () {
+          teamTitle.style.transform = 'translateX(0px)';
+          teamContent.style.transform = 'translateX(0px)';
+        }
+      },
+    ]
+
+    //开机动画
+    var imgArr = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','about1.jpg','about2.jpg','about3.jpg','about4.jpg','worksimg1.jpg','worksimg2.jpg','worksimg3.jpg','worksimg4.jpg','team.png','greenLine.png'];
+    var num = 0;
+    for (var i = 0; i < imgArr.length; i++) {
+      var items = imgArr[i];
+      //创建img
+      var image = new Image();
+      image.src = './img/'+ items;
+
+      image.onload = function () {
+        num++;
+        bootAnimationLine.style.width = num/imgArr.length *100 + '%';
+        if(num === imgArr.length){
+          //说明图片加载完成
+          bootAnimationTop.style.height = 0;
+          bootAnimationBottom.style.height = 0;
+          bootAnimationLine.style.display = 'none';
+          bootAnimationTop.addEventListener('transitionend',function () {
+            bootAnimation.remove();
+          })
+        }
+        
+      }
+
+    }
   
 })
